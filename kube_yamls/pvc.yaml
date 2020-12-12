@@ -1,10 +1,11 @@
-apiVersion: v1
+apiVersion : v1
 kind : PersistentVolumeClaim
 metadata :
-  name : kube-pvc
+  name : pvc 
 spec :
   accessModes :
     - ReadWriteMany
-  resources:
-    requests:
-      storage: 10Mi
+  resources :
+    requests :
+      storage : 200Mi
+  #storageClass : Manual

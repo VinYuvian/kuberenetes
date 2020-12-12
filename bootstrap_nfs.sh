@@ -19,19 +19,21 @@ systemctl enable nfs-server rpcbind
 
 
 echo "[TASK4] Configuring shared folder"
-mkdir /var/nfsshare
-chmod -R 755 /var/nfsshare
-chown nfsnobody:nfsnobody /var/nfsshare
+mkdir /home/vagrant/app
+chmod -R 755 /home/vagrant/app
+chown nfsnobody:nfsnobody /home/vagrant/app
 
 
 echo "[TASK5] Configuring exports file"
 cat >> /etc/exports <<EOL 
-/var/nfsshare 192.168.10.0/24(rw,sync,no_root_squash)
+/home/vagrant/app 192.168.0.0/16(rw,sync,no_root_squash)
 EOL
 
 
 echo "[TASK6] Exporting FS"
 exportfs -r
+
+mv /home/vagrant/reactapp.com/* /home/vagrant/app/
 
 
 echo "[TASK7] Firewall Configuration "
