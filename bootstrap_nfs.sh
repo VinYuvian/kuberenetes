@@ -33,7 +33,7 @@ EOL
 echo "[TASK6] Exporting FS"
 exportfs -r
 
-mv /home/vagrant/reactapp.com/* /home/vagrant/app/
+#mv /home/vagrant/reactapp.com/* /home/vagrant/app/
 
 
 echo "[TASK7] Firewall Configuration "
