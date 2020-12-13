@@ -25,7 +25,7 @@ chown nfsnobody:nfsnobody /home/vagrant/app
 
 
 echo "[TASK5] Configuring exports file"
-cat >> /etc/exports <<EOL 
+cat >> /etc/exports <<EOL
 /home/vagrant/app 192.168.0.0/16(rw,sync,no_root_squash)
 EOL
 
@@ -33,7 +33,7 @@ EOL
 echo "[TASK6] Exporting FS"
 exportfs -r
 
-#mv /home/vagrant/reactapp.com/* /home/vagrant/app/
+cp -R /home/vagrant/reactapp.com/* /home/vagrant/app/
 
 
 echo "[TASK7] Firewall Configuration "

@@ -47,6 +47,6 @@ Vagrant.configure(2) do | config |
      		vb.customize ["modifyvm", :id, "--audio", "none"]
      	end
      	node.vm.provision "shell", path: "bootstrap_nfs.sh"
-        node.vm.synced_folder "React-Go/demoapp/build/","/home/vagrant/app/"
+      node.vm.synced_folder "React-Go/demoapp/build","/home/vagrant/reactapp.com"
      end
 end
