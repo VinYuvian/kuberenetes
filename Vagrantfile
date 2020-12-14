@@ -6,7 +6,7 @@ Vagrant.configure(2) do | config |
 		node.vm.hostname = "kmaster"
 		node.vm.network "private_network", ip: "192.168.10.10"
 		node.vm.box = "bento/centos-7"
-		node.vm.synced_folder "kube_yamls/","/home/vagrant/kube_yamls"
+		node.vm.synced_folder "resources/","/home/vagrant/resources"
 		node.vm.provider "virtualbox" do |v|
 			v.name = "kmaster"
 			v.memory = 2048
@@ -44,6 +44,8 @@ Vagrant.configure(2) do | config |
      		vb.name = "nfs"
      		vb.memory = 1024
      		vb.cpus = 1
+				# Prevent VirtualBox from interfering with host audio stack
+
      		vb.customize ["modifyvm", :id, "--audio", "none"]
      	end
      	node.vm.provision "shell", path: "bootstrap_nfs.sh"
