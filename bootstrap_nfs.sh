@@ -6,7 +6,7 @@ cat >>/etc/hosts<<EOF
 192.168.10.10 kmaster kmaster
 192.168.10.11 kworker1 kworker1
 192.168.10.12 kworker2 kworker2
-192.168.10.15 nfs nfs
+192.168.10.15 nfs nfsl
 EOF
 
 echo "[TASK2] Install nfs-utils"
@@ -33,7 +33,7 @@ EOL
 echo "[TASK6] Exporting FS"
 exportfs -r
 
-cp -R /home/vagrant/reactapp.com/* /home/vagrant/app/
+#cp -R /home/vagrant/reactapp.com/* /home/vagrant/app/
 
 
 echo "[TASK7] Firewall Configuration "

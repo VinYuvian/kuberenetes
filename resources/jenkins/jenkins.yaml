@@ -1,0 +1,82 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: service-reader
+rules:
+  - apiGroups: [""] # "" indicates the core API group
+    resources: ["services"]
+    verbs: ["create","delete","get","list","patch","update","watch"]
+  - apiGroups: [""] # "" indicates the core API group
+    resources: ["deployments"]
+    verbs: ["create","delete","get","list","patch","update","watch"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["create","delete","get","list","patch","update","watch"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create","delete","get","list","patch","update","watch"]
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get","list","watch"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-jenkins-deployment
+  labels:
+    app: k8s-jenkins
+spec:
+  selector:
+    matchLabels:
+      app: k8s-jenkins
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: k8s-jenkins
+    spec:
+      serviceAccountName: default
+      containers:
+        - image: vin1711/jenkins:1.0
+          name: k8s-jenkins-container
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+            - containerPort: 50000
+          env:
+            - name: JAVA_OPTS
+              value: -Djenkins.install.runSetupWizard=false
+          volumeMounts:
+            - name: jenkins-home
+              mountPath: /var/jenkins_home
+      volumes:
+        - name: jenkins-home
+          emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-jenkins-service
+  labels:
+    app: k8s-jenkins
+spec:
+  type: NodePort
+  selector:
+    app: k8s-jenkins
+  ports:
+    - port: 8080
+      name: http
+      protocol: TCP
+      nodePort: 30000
+      targetPort: 8080
+    - port: 50000
+      name: agent
+      protocol: TCP
+      targetPort: 50000

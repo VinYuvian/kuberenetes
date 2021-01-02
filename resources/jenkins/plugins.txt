@@ -1,0 +1,6 @@
+kubernetes-cd:2.3.1
+ssh-agent:1.20
+credentials-binding:latest
+pipeline-github-lib:latest
+pipeline-stage-view:latest
+ws-cleanup:latest
